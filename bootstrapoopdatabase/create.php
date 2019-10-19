@@ -22,8 +22,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" disabled><i class="fa fa-user-plus fa-lg"> Buat Baru</i></a>
@@ -50,39 +48,39 @@
                         <form action="proses.php?aksi=tambah" method="post">
                             <div class="form-group">
                                 <label>Nama </label>
-                                <input class="form-control" type="text" name="nama" id="">
+                                <input class="form-control" type="text" name="nama" id="" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Alamat </label>
-                                <textarea class="form-control" name="alamat" name="alamat" id="" cols="10"
+                                <textarea class="form-control" name="alamat" name="alamat" id="" required cols="10"
                                     rows="5"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
-                                <input class="form-control" type="date" name="tgl" id="">
+                                <input class="form-control" type="date" name="tgl" id="" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Jenis Kelamin : </label>
                                 <div class="form-check-inline ">
                                     <label class="form-check-label form-control">
-                                        <input type="radio" class="form-check-input" value="laki-laki"
-                                            name="jk">Laki-Laki
+                                        <input type="radio" class="form-check-input" value="laki-laki" name="jk"
+                                            required>Laki-Laki
                                     </label>
                                 </div>
 
                                 <div class="form-check-inline">
                                     <label class="form-check-label form-control">
-                                        <input type="radio" class="form-check-input" value="perempuan"
+                                        <input type="radio" class="form-check-input" required value="perempuan"
                                             name="jk">Perempuan
                                     </label>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Agama</label>
-                                    <select name="agama" class="form-control" id="">
+                                    <select name="agama" class="form-control" required id="">
                                         <option value="Muslim">Muslim</option>
                                         <option value="Kristen">Kristen</option>
                                         <option value="Hindu">Hindu</option>
@@ -97,7 +95,6 @@
             </div>
         </div>
         </form>
-
         <script src="/bootstrapoopdatabase/assets/js/jquery.min.js"></script>
         <script src="/bootstrapoopdatabase/assets/js/bootstrap.bundle.js"></script>
         <script src="/bootstrapoopdatabase/assets/js/bootstrap.bundle.min.js"></script>

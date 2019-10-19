@@ -20,22 +20,20 @@ $db = new Database();
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand text-white">Biodata</a>
+        <a class="navbar-brand text-white">Toko</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" disabled><i class="fa fa-address-book fa-lg"> Data Siswa</i></a>
+                    <a class="nav-link" disabled><i class="fa fa-address-book fa-lg"> Daftar</i></a>
                 </li>
             </ul>
             <ul class="navbar-nav">
                 <li>
-                    <a class="" aria-labelledby="dropdownMenu2" href="/bootstrapoopdatabase/create.php">
+                    <a class="" aria-labelledby="dropdownMenu2" href="create.php">
                         <input class="btn btn-outline-success" type="submit" name="" value="Buat"></a>
                 </li>
             </ul>
@@ -46,51 +44,80 @@ $db = new Database();
 
     <div class="container-fluid mt-5 mb-5">
         <table class="table" id="har">
-            <thead class="thead-dark ">
+            <thead class="thead-dark">
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Alamat</th>
-                    <th>Jenis Kelamin</th>
-                    <th>tanggal lahir</th>
-                    <th>agama</th>
-                    <th>umur</th>
+                    <th>jumlah</th>
+                    <th>Harga</th>
+                    <th>Sub Total</th>
+                    <th>Deskripsi</th>
+                    <th>Kategori</th>
                     <th>Aksi</th>
-
                 </tr>
             </thead>
-
             <tbody>
                 <?php
-            $biodata = new Biodata();
+            $toko = new Toko();
             $no = 1;
-            foreach($biodata->index() as $data) {
+            foreach($toko->index() as $data) {
+                $total += $data['sub_total'];
+                if ($data['kategori_produk'] == "Bahan") {
+                    $warna= "badge badge-success"; 
+                }
+                elseif ($data['kategori_produk'] == "Elektronik") {
+                    $warna= "badge badge-primary"; 
+                }
+                elseif ($data['kategori_produk'] == "Kosmetik") {
+                    $warna= "badge badge-danger"; 
+                }
+                elseif ($data['kategori_produk'] == "Pakaian") {
+                    $warna= "badge badge-warning"; 
+                }
+                elseif ($data['kategori_produk'] == "Alat") {
+                    $warna= "badge badge-info"; 
+                }
         ?>
                 <tr>
                     <td><?php echo $no++; ?></td>
-                    <td><?php echo $data['nama']; ?></td>
-                    <td><?php echo $data['alamat']; ?></td>
-                    <td><?php echo $data['jk']; ?></td>
-                    <td><?php echo $data['tgl_lahir']; ?></td>
-                    <td><?php echo $data['agama']; ?></td>
-                    <td><?php echo $data['umur']; ?> Tahun</td>
+                    <td><?php echo $data['nama_produk']; ?></td>
+                    <td><?php echo $data['jumlah_produk']; ?></td>
+                    <td><?php echo "Rp.".number_format($data['harga_produk'],'0',',','.'); ?></td>
+                    <td><?php echo "Rp.".number_format($data['sub_total'],'0',',','.'); ?>
+                    </td>
+                    <td><?php echo $data['deskripsi_produk']; ?></td>
+                    <td><span class="<?= $warna?>"><?php echo $data['kategori_produk']; ?></span></td>
                     <td><a href="show.php?id=<?php echo $data['id']; ?>&aksi=show">
                             <input type="submit" class="btn btn-outline-primary" value="Lihat"></a>
-                        <a href="edit.php?id=<?php echo $data['id']; ?>&aksi=edit">
-                            <input type="submit" class="btn btn-outline-warning" value="Edit"></a>
                         <a href="proses.php?id=<?php echo $data['id']; ?>&aksi=delete">
                             <input type="submit" class="btn btn-outline-danger" value="Hapus">
                         </a>
+                        <a href="edit.php?id=<?php echo $data['id']; ?>&aksi=edit">
+                            <input type="submit" class="btn btn-outline-warning" value="edit">
+                        </a>
                     </td>
                 </tr>
-                <?php }?> </tbody>
+                <?php  }?>
+            </tbody>
         </table>
     </div>
-    <script src="assets/js/bootstrap.bundle.js">
-    </script>
+    <div class="card">
+        <h4 class="card-title">
+            <center>Total Pembayaran</center>
+        </h4>
+        <div class="card-body">
+            <center>
+                <?php echo "Rp.".number_format($total,'0',',','.');?>
+                <center>
+        </div>
+    </div>
+
+
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.bundle.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/jquery.js"></script>
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 

@@ -67,31 +67,33 @@ $biodata = new Biodata();
                             <input type="hidden" name="id" value="<?= $id;?>">
                             <div class="form-group">
                                 <label>Nama </label>
-                                <input class="form-control" type="text" value="<?= $nama;?>" name="nama">
+                                <input class="form-control" type="text" value="<?= $nama;?>" name="nama" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Alamat </label>
-                                <textarea class="form-control" name="alamat" name="alamat" id="" cols="10"
-                                    rows="5"><?= $alamat;?></textarea>
+                                <textarea class="form-control" name="alamat" name="alamat" id="" cols="10" rows="5"
+                                    required><?= $alamat;?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
-                                <input class="form-control" type="date" name="tgl" value="<?= $tgl;?>" id="">
+                                <input class="form-control" type="date" name="tgl" value="<?= $tgl;?>" required id="">
                             </div>
 
                             <div class="form-group">
                                 <label>Jenis Kelamin : </label>
                                 <div class="form-check-inline ">
                                     <label class="form-check-label form-control">
-                                        <input type="radio" class="form-check-input" value="laki-laki" name="jk" <?php if ($jk == "laki-laki") {
+                                        <input type="radio" class="form-check-input" value="laki-laki" name="jk"
+                                            required <?php if ($jk == "laki-laki") {
                                                     ?>checked<?php }?>>Laki-Laki
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="form-check-label form-control">
-                                        <input type="radio" class="form-check-input" value="perempuan" name="jk" <?php if ($jk == "perempuan") {
+                                        <input type="radio" class="form-check-input" value="perempuan" name="jk"
+                                            required <?php if ($jk == "perempuan") {
                                                     ?>checked<?php }?>>Perempuan
                                     </label>
                                 </div>
@@ -99,7 +101,7 @@ $biodata = new Biodata();
 
                                 <div class="form-group">
                                     <label>Agama</label>
-                                    <select name="agama" class="form-control" id="">
+                                    <select name="agama" class="form-control" id="" required>
                                         <option value="Muslim" <?php if ($agama == "Muslim") {
                                                     ?>selected<?php }?>>Muslim</option>
                                         <option value="Kristen" <?php if ($agama == "Kristen") {
