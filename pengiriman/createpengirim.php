@@ -1,3 +1,5 @@
+<?php
+include 'database.php';?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,60 +46,19 @@
             <div class="col-md-8 mx-auto">
                 <div class="card justify-content-center">
                     <div class="card-body">
-                        <form action="proses.php?aksi=tambah" method="post" enctype="multipart/form-data">
+                        <form action="proses.php?aksi=pengirim" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Nama Pengirim</label>
                                 <input class="form-control" type="text" name="nama" id="" required>
                             </div>
                             <div class="form-group">
-                                <label>Alamat Pengirim</label>
-                                <textarea class="form-control" name="alamat" id="" required cols="10"
-                                    rows="5"></textarea>
+                                <label>kota</label>
+                                <input class="form-control" type="text" name="kota" id="" required>
                             </div>
 
                             <div class="form-group">
-                                <label>Nama Barang</label>
-                                <input class="form-control" type="text" name="nama_barang" id="" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Berat Barang</label>
-                                <input class="form-control" type="number" min="1" name="berat_barang" id="" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>foto</label>
-                                <input class="form-control" type="file" name="foto_barang" id="" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Layanan</label>
-                                <select name="layanan" class="form-control" required id="">
-                                    <option value="YES">YES</option>
-                                    <option value="REG">REG</option>
-                                    <option value="OKE">OKE</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Nomor Telepon</label>
-                                <input type="number" name="nomor" class="form-control" id="" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Nama Penerima</label>
-                                <input class="form-control" type="type" name="nama_penerima" id="" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Alamat Penerima</label>
-                                <textarea class="form-control" name="alamat_penerima" id="" required cols="10"
-                                    rows="5"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Kode Pos</label>
-                                <input class="form-control" type="number" name="kode" id="" required>
+                                <label>kode pos</label>
+                                <input class="form-control" type="number" name="kode_pos" id="" required>
                             </div>
 
                             <input type="submit" value="Simpan" class="btn btn-outline-primary" name="save">

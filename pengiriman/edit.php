@@ -1,6 +1,5 @@
 <?php
 include 'database.php';
-$pengiriman = new Pengiriman();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,15 +16,15 @@ $pengiriman = new Pengiriman();
 
 <body>
     <?php 
-    foreach ($ecommerce->edit($_GET['id']) as $data) {
-        $id = $data['id'];
-        $nama = $data['nama_barang'];
-        $kategori = $data['kategori_barang'];
-        $jumlah = $data['jumlah_barang'];
-        $harga = $data['harga_barang'];
-        $deskripsi = $data['deskripsi'];
-        $foto = $data['foto_barang'];
-        $sub_total = $data['sub_total']; ?>
+    while ($data = mysqli_fetch_assoc($join->wherejoin($_GET['id']))) {
+        $idpengiriman = $data['id_pengiriman'];
+        $idpengirim = $data['id_pengirim'];
+        $idpenerima = $data['id_penerima'];
+        $idbarang = $data['id_barang'];
+        $idlayanan = $data['id_layanan'];
+        $idtipe = $data['id_tipe'];
+    break; }
+    ?>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand text-white">Biodata</a>
@@ -63,66 +62,110 @@ $pengiriman = new Pengiriman();
                     <div class="card-body">
                         <form action="proses.php?aksi=update" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                <input type="hidden" name="id" value="<?= $id;?>">
-                                <label>Nama Produk</label>
-                                <input class="form-control" type="text" value="<?= $nama;?>" name="nama" id="" required>
-                            </div>
+                                <input type="hidden" name="id_pengiriman" value="<?= $idpengiriman;?>">
+                                <input type="hidden" name="id_penerima" value="<?= $idpenerima;?>">
+                                <input type="hidden" name="id_pengirim" value="<?= $idpengirim;?>">
+                                <input type="hidden" name="id_barang" value="<?= $idbarang;?>">
+                                <input type="hidden" name="id_layanan" value="<?= $idlayanan;?>">
+                                <input type="hidden" name="id_tipe" value="<?= $idtipe;?>">
 
-                            <div class="form-group">
-                                <label>Kategori</label>
-                                <select name="kategori" class="form-control" required id="">
-                                    <option value="Kosmetik" <?php if ($kategori == "Kosmetik") {
-                                                    ?>selected<?php }?>>Kosmetik</option>
-                                    <option value="Alat" <?php if ($kategori == "Alat") {
-                                                    ?>selected<?php }?>>Alat</option>
-                                    <option value="Elektronik" <?php if ($kategori == "Elektronik") {
-                                                    ?>selected<?php }?>>Elektronik</option>
-                                    <option value="Bahan" <?php if ($kategori == "Bahan") {
-                                                    ?>selected<?php }?>>Bahan</option>
-                                    <option value="Pakaian" <?php if ($kategori == "Pakaian") {
-                                                    ?>selected<?php }?>>Pakaian</option>
-                                </select>
-                            </div>
 
-                            <div class="form-group">
-                                <label>Jumlah Produk</label>
-                                <input class="form-control" type="number" min=1 name="jumlah" value="<?= $jumlah;?>"
-                                    id="" required>
-                            </div>
+                                <div class="form-group">
+                                    <label>Nama Pengirim</label>
+                                    <input class="form-control" type="text" value="<?= $data['nama_pengirim'];?>"
+                                        name="nama" id="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>kota Pengirim</label>
+                                    <input class="form-control" type="text" value="<?= $data['kota_pengirim'];?>"
+                                        name="kota" id="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama Pengirim</label>
+                                    <input class="form-control" type="text" value="<?= $data['kode_pos_pengirim'];?>"
+                                        name="kode_pos" id="" required>
+                                </div>
 
-                            <div class="form-group">
-                                <label>Harga Produk</label>
-                                <input class="form-control" type="number" min=1 name="harga" value="<?= $harga;?>" id=""
-                                    required>
-                            </div>
 
-                            <div class="form-group">
-                                <label>Deskripsi Produk</label>
-                                <textarea class="form-control" name="deskripsi" id="" required cols="10"
-                                    rows="5"><?= $deskripsi;?></textarea>
-                            </div>
 
-                            <div class="form-group">
-                                <label>foto</label>
-                                <input class="form-control" type="file" name="foto" id="">
-                                <img class="form-control-file" src="img/<?= $foto?>" width="200px">
-                            </div>
+                                <div class="form-group">
+                                    <label>Nama Penerima</label>
+                                    <input class="form-control" type="text" value="<?= $data['nama_penerima'];?>"
+                                        name="nama_penerima" id="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>kota Penerima</label>
+                                    <input class="form-control" type="text" value="<?= $data['kota_penerima'];?>"
+                                        name="kota_penerima" id="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama Penerima</label>
+                                    <input class="form-control" type="text" value="<?= $data['kode_pos_penerima'];?>"
+                                        name="kode_pos_penerima" id="" required>
+                                </div>
 
-                            <input type="submit" value="Simpan" class="btn btn-outline-primary" name="save">
-                            <input type="reset" value="Reset" class="btn btn-outline-warning">
+                                <div class="form-group">
+                                    <label>Nama barang</label>
+                                    <input class="form-control" type="text" value="<?= $data['nama_barang'];?>"
+                                        name="nama_barang" id="" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Tipe</label>
+                                    <select name="tipe" class="form-control" required id="">
+                                        <option value="1" <?php if ($idtipe== 1) {?>selected<?php }?>>
+                                            Dokumen
+                                        </option>
+                                        <option value="2" <?php if ($idtipe == 2) {?>selected<?php }?>>
+                                            Paket
+                                        </option>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>berat barang</label>
+                                    <input class="form-control" type="text" value="<?= $data['berat'];?>"
+                                        name="berat_barang" id="" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>foto</label>
+                                    <input class="form-control" type="file" name="foto_barang" id="">
+                                    <img class="form-control-file" src="img/<?= $data['foto']?>" width="200px">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Layanan</label>
+                                    <select name="layanan" class="form-control" required id="">
+                                        <option value="1" <?php if ($idlayanan == 1) {?>selected<?php }?>>
+                                            SS
+                                        </option>
+                                        <option value="2" <?php if ($idlayanan == 2) {?>selected<?php }?>>
+                                            YES
+                                        </option>
+                                        <option value="3" <?php if ($idlayanan == 3) {?>selected<?php }?>>
+                                            REG
+                                        </option>
+                                        <option value="4" <?php if ($idlayanan == 4) {?>selected<?php }?>>
+                                            OKE
+                                        </option>
+                                    </select>
+                                </div>
+                                <input type="submit" value="Simpan" class="btn btn-outline-primary" name="save">
+                                <input type="reset" value="Reset" class="btn btn-outline-warning">
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </form>
-    <?php }
-    ?>
+        </form>
 
-    </fieldset>
-    <script src="/bootstrapoopdatabase/assets/js/jquery.min.js"></script>
-    <script src="/bootstrapoopdatabase/assets/js/bootstrap.bundle.js"></script>
-    <script src="/bootstrapoopdatabase/assets/js/bootstrap.bundle.min.js"></script>
+
+        </fieldset>
+        <script src="/bootstrapoopdatabase/assets/js/jquery.min.js"></script>
+        <script src="/bootstrapoopdatabase/assets/js/bootstrap.bundle.js"></script>
+        <script src="/bootstrapoopdatabase/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

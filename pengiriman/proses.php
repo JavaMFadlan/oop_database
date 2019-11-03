@@ -1,24 +1,40 @@
 <?php
 include 'database.php';
-$pengiriman = new Pengiriman();
 
 $aksi = $_GET['aksi'];
 
 if (isset($_POST['save'])) {
-    $id = $_POST['id'];
-	$nama_pengirim = $_POST['nama'];
-	$alamat_pengirim = $_POST['alamat'];
-	$nama_barang = $_POST['nama_barang'];
-	$berat_barang = $_POST['berat_barang'];
-	$layanan = $_POST['layanan'];
-	$no_pengirim = $_POST['nomor'];
-
-
+	// id
+	$id_pengiriman = $_POST['id_pengiriman'];
+	$id_pengirim = $_POST['id_pengirim'];
+	$id_penerima = $_POST['id_penerima'];
+	$id_barang = $_POST['id_barang'];
+	$id_layanan = $_POST['id_layanan'];
+	
+	
+	
+	// pegirim
+	$nama = $_POST['nama'];
+	$kota = $_POST['kota'];
+	$kode_pos = $_POST['kode_pos'];
+	
+	
+	// penerima
 	$nama_penerima = $_POST['nama_penerima'];
-	$alamat_penerima = $_POST['alamat_penerima'];
-	$kode_pos = $_POST['kode'];
+	$kota_penerima = $_POST['kota_penerima'];
+	$kode_pos_penerima = $_POST['kode_pos_penerima'];
 
+	// barang
+	$id_tipe = $_POST['id_tipe'];
+	$id_tipe = $_POST['tipe'];
+	$nama_barang= $_POST['nama_barang'];
+	$berat_barang= $_POST['berat_barang'];
 	$namaFo = $_FILES['foto_barang'];
+	// var_dump($_POST);?>
+<br>
+<?php
+	
+
 }
 
     function upload($foto){
@@ -47,7 +63,7 @@ if (isset($_POST['save'])) {
 			return false;
 		}
 
-		if ( $ukuranF > 1000000) {
+		if ( $ukuranF > 2000000) {
 			echo "<script>
 			alert('Ukuran Terlalu Besar');
 			</script>";
@@ -67,36 +83,59 @@ if (isset($_POST['save'])) {
 		return $namaFB;
 	}
 
-if($aksi == "tambah"){
-	$foto_barang = upload($namaFo);
-    $pengiriman->create($nama_pengirim,$alamat_pengirim,$nama_barang,$berat_barang,$foto_barang,$layanan,$no_pengirim,$nama_penerima,$alamat_penerima,$kode_pos);
-        header("location:index.php");
+if ($aksi == "pengirim"){
+	$pengirim->create($nama,$kota,$kode_pos);
+	header("location:createpenerima.php");
 }
+elseif ($aksi == "penerima"){
+	$penerima->create($nama_penerima,$kota_penerima,$kode_pos_penerima);
+	header("location:createbarang.php");
+}
+elseif ($aksi == "barang"){
+	$foto_barang = upload($namaFo);
+	$barang->create($id_tipe,$nama_barang,$berat_barang,$foto_barang);
 
+	$sql1 = $pengirim->mencaripengirim();
+	$sql2 = $penerima->mencaripenerima();
+	$sql3 = $barang->mencaribarang();
 
+	$row1 = mysqli_fetch_array($sql1);
+	$id_pengirim = $row1['id_pengirim'];
+	$row2 = mysqli_fetch_array($sql2);
+	$id_penerima = $row2['id_penerima'];
+	$row3 = mysqli_fetch_array($sql3);
+	$id_barang = $row3['id_barang'];
+var_dump($id_tipe,$nama_barang,$berat_barang,$foto_barang);
+    $pengiriman->create($id_pengirim,$id_penerima,$id_barang,$id_layanan,$id_tipe);
+	header("location:index.php");
+}
 elseif($aksi == "update"){
-	$data = $pengiriman->edit($id);
-	$fotol = mysqli_fetch_array($data);
-	$path = "img/".$fotol['foto_barang'];
-    if ($namaFo['error']==4) {
-			$foto_barang = $fotol['foto_barang'];
-		}
-		else{
-			unlink($path);
-			$foto_barang = upload($namaFo);
-		}
-		
-    $pengiriman->update($id, $nama_pengirim,$alamat_pengirim,$nama_barang,$berat_barang,$foto_barang,$layanan,$no_pengirim,$nama_penerima,$alamat_penerima,$kode_pos);
-    header("location:index.php");
+
+$data = $pengiriman->edit($id);
+$fotol = mysqli_fetch_array($data);
+$path = "img/".$fotol['foto_barang'];
+if ($namaFo['error']==4) {
+$foto_barang = $fotol['foto_barang'];
+}
+else{
+unlink($path);
+$foto_barang = upload($namaFo);
+}
+$pengirim->update($id_pengirim,$nama_pengirim,$kota_pengirim,$kode_pos_pengirim);
+$penerima->update($id_penerima,$nama_penerima,$kota_penerima,$kode_pos_penerima);	
+$barang->update($id_barang,$id_tipe,$nama_barang,$berat,$foto_barang);
+
+$pengiriman->update($id_pengiriman,$id_pengirim,$id_penerima,$id_barang,$id_layanan,$id_tipe);
+header("location:index.php");
 }
 
 
 elseif($aksi == "delete"){
-	$data = $pengiriman->edit($_GET['id']);
-	$fotol = mysqli_fetch_array($data);
-	$path = "img/".$fotol['foto_barang'];
-	unlink($path);
-    $pengiriman->delete($_GET['id']);
-    header("location:index.php");
+$data = $pengiriman->edit($_GET['id']);
+$fotol = mysqli_fetch_array($data);
+$path = "img/".$fotol['foto_barang'];
+unlink($path);
+$pengiriman->delete($_GET['id']);
+header("location:index.php");
 }
 ?>

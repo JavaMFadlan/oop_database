@@ -1,8 +1,5 @@
 <?php
-session_start();
 include 'database.php';
-$db = new Database();
-if ($_SESSION['user'] == "admin"){
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +38,7 @@ if ($_SESSION['user'] == "admin"){
                     </button>
                 </li>
                 <li>
-                    <a class="" aria-labelledby="dropdownMenu2" href="create.php">
+                    <a class="" aria-labelledby="dropdownMenu2" href="createpengirim.php">
                         <input class="btn btn-outline-success" type="submit" name="" value="Buat"></a>
                 </li>
             </ul>
@@ -56,58 +53,38 @@ if ($_SESSION['user'] == "admin"){
                 <tr>
                     <th>No</th>
                     <th>Foto</th>
-                    <th>Nama</th>
-                    <th>jumlah</th>
-                    <th>Harga</th>
-                    <th>Sub Total</th>
-                    <th>Deskripsi</th>
-                    <th>Kategori</th>
+                    <th>Nama Barang</th>
+                    <th>Layanan</th>
+                    <th>Berat</th>
+                    <th>Tujuan</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-            $ecommerce = new Ecommerce();
             $no = 1;
-            foreach($ecommerce->index() as $data) {
-                $total += $data['sub_total'];
-                if ($data['kategori_barang'] == "Bahan") {
-                    $warna= "badge badge-success"; 
-                }
-                elseif ($data['kategori_barang'] == "Elektronik") {
-                    $warna= "badge badge-primary"; 
-                }
-                elseif ($data['kategori_barang'] == "Kosmetik") {
-                    $warna= "badge badge-danger"; 
-                }
-                elseif ($data['kategori_barang'] == "Pakaian") {
-                    $warna= "badge badge-warning"; 
-                }
-                elseif ($data['kategori_barang'] == "Alat") {
-                    $warna= "badge badge-info"; 
-                }
-        ?>
+            $query= $join->injoin();
+            while ($data = mysqli_fetch_assoc($query)) {
+                // var_dump($data);
+                ?>
                 <tr>
                     <td><?php echo $no++; ?></td>
-                    <td><img src="img/<?= $data['foto_barang']; ?>" width="50px" alt=""></td>
+                    <td><img src="img/<?= $data['foto']; ?>" width="50px" alt=""></td>
                     <td><?php echo $data['nama_barang']; ?></td>
-                    <td><?php echo $data['jumlah_barang']; ?></td>
-                    <td><?php echo "Rp.".number_format($data['harga_barang'],'0',',','.'); ?></td>
-                    <td><?php echo "Rp.".number_format($data['sub_total'],'0',',','.'); ?>
-                    </td>
-                    <td><?php echo $data['deskripsi']; ?></td>
-                    <td><span class="<?= $warna?>"><?php echo $data['kategori_barang']; ?></span></td>
-                    <td><a href="show.php?id=<?php echo $data['id']; ?>&aksi=show">
+                    <td><?php echo $data['layanan']; ?></td>
+                    <td><?php echo $data['berat']?></td>
+                    <td><?php echo $data['kota_penerima'] ?></td>
+                    <td><a href="show.php?id=<?php echo $data['id_pengiriman']; ?>&aksi=show">
                             <input type="submit" class="btn btn-outline-primary" value="Lihat"></a>
-                        <a href="proses.php?id=<?php echo $data['id']; ?>&aksi=delete">
+                        <a href="proses.php?id=<?php echo $data['id_pengiriman']; ?>&aksi=delete">
                             <input type="submit" class="btn btn-outline-danger" value="Hapus">
                         </a>
-                        <a href="edit.php?id=<?php echo $data['id']; ?>&aksi=edit">
+                        <a href="edit.php?id=<?php echo $data['id_pengiriman']; ?>&aksi=edit">
                             <input type="submit" class="btn btn-outline-warning" value="edit">
                         </a>
                     </td>
                 </tr>
-                <?php  }?>
+                <?php }?>
             </tbody>
         </table>
     </div>
@@ -160,8 +137,3 @@ $(document).ready(function() {
 </script>
 
 </html>
-<?php
-}else {
-    header("location:home.php");
-}
-?>

@@ -1,7 +1,5 @@
 <?php
 include 'database.php';
-$pengiriman = new Pengiriman();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,16 +16,7 @@ $pengiriman = new Pengiriman();
 
 <body>
     <?php 
-    foreach ($ecommerce->show($_GET['id']) as $data) {
-        $id = $data['id'];
-        $nama = $data['nama_barang'];
-        $kategori = $data['kategori_barang'];
-        $jumlah = $data['jumlah_barang'];
-        $harga = $data['harga_barang'];
-        $deskripsi = $data['deskripsi'];
-        $foto = $data['foto_barang'];
-        $sub_total = $data['sub_total'];
-    }
+    while ($data = mysqli_fetch_array($join->wherejoin($_GET['id']))) {
     ?>
 
 
@@ -59,52 +48,63 @@ $pengiriman = new Pengiriman();
 
 
     <div class="container-fluid">
-        <div class="row row-md-8 ">
-            <div class="col-md-8 mx-auto">
+        <div class="row row-md-12 ">
+            <div class="col-md-12 mx-auto mt-5">
                 <div class="card justify-content-center">
                     <div class="card-body">
-                        <form action="proses.php?aksi=tambah" method="post">
-                            <div class="form-group">
-                                <input type="hidden" name="id" value="<?= $id;?>">
-                                <label>Nama barang</label>
-                                <input class="form-control" type="text" value="<?= $nama;?>" name="nama" id="" readonly>
-                            </div>
+                        <div class="row featurette">
+                            <div class="col-md-7 order-md-2">
+                                <a class="btn btn-primary" data-toggle="collapse" href="#datapengirim" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Pengirim
+                                </a>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#datapenerima" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Penerima
+                                </a>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#databarang" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Barang
+                                </a>
+                                <div class="collapse" id="datapengirim">
+                                    <div class="card card-body">
+                                        <p>Nama : <?=$data['nama_pengirim']?></p>
+                                        <p>Kota : <?=$data['kota_pengirim']?></p>
+                                        <p>Kode Pos : <?=$data['kode_pos_pengirim']?></p>
 
-                            <div class="form-group">
-                                <label>Kategori</label>
-                                <input class="form-control" type="text" value="<?= $kategori;?>" name="nama" id=""
-                                    readonly>
-                            </div>
+                                    </div>
+                                </div>
+                                <div class="collapse" id="datapenerima">
+                                    <div class="card card-body">
+                                        <p>Nama : <?=$data['nama_penerima']?></p>
+                                        <p>Kota : <?=$data['kota_penerima']?></p>
+                                        <p>Kode Pos : <?=$data['kode_pos_penerima']?></p>
 
-                            <div class="form-group">
-                                <label>Jumlah barang</label>
-                                <input class="form-control" type="number" min=1 name="jumlah" value="<?= $jumlah;?>"
-                                    id="" readonly>
-                            </div>
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                <label>Harga barang</label>
-                                <input class="form-control" type="number" min=1 name="harga" value="<?= $harga;?>" id=""
-                                    readonly>
+                                <div class="collapse" id="databarang">
+                                    <div class="card card-body">
+                                        <p>Nama Barang : <?=$data['nama_barang']?></p>
+                                        <p>berat Barang : <?=$data['berat']?></p>
+                                        <p>Layanan Barang : <?=$data['layanan']?></p>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="col-md-5 order-md-1">
+                                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+                                    src="img/<?= $data['foto']?>" alt="">
 
-                            <div class="form-group">
-                                <label>Deskripsi barang</label>
-                                <textarea class="form-control" name="deskripsi" id="" readonly cols="10"
-                                    rows="5"><?= $deskripsi;?></textarea>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label>foto</label>
-                                <img class="form-control-file" src="img/<?= $foto?>" width="150px">
-                            </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </form>
-
+    <?php break;}
+    ?>
 
     </fieldset>
     <script src="/bootstrapoopdatabase/assets/js/jquery.min.js"></script>
