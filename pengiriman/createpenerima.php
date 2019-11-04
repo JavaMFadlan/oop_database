@@ -49,16 +49,16 @@ include 'database.php';
                     <div class="card-body">
                         <form action="proses.php?aksi=penerima" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label>Nama Pengirim</label>
+                                <label>Nama penerima</label>
                                 <input class="form-control" type="text" name="nama_penerima" id="" required>
                             </div>
                             <div class="form-group">
-                                <label>kota</label>
+                                <label>kota penerima</label>
                                 <input class="form-control" type="text" name="kota_penerima" id="" required>
                             </div>
 
                             <div class="form-group">
-                                <label>kode pos</label>
+                                <label>kode pos penerima</label>
                                 <input class="form-control" type="number" name="kode_pos_penerima" id="" required>
                             </div>
 

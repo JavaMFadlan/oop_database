@@ -66,8 +66,7 @@ include 'database.php';
                                 <input type="hidden" name="id_penerima" value="<?= $idpenerima;?>">
                                 <input type="hidden" name="id_pengirim" value="<?= $idpengirim;?>">
                                 <input type="hidden" name="id_barang" value="<?= $idbarang;?>">
-                                <input type="hidden" name="id_layanan" value="<?= $idlayanan;?>">
-                                <input type="hidden" name="id_tipe" value="<?= $idtipe;?>">
+
 
 
                                 <div class="form-group">
@@ -104,15 +103,18 @@ include 'database.php';
                                         name="kode_pos_penerima" id="" required>
                                 </div>
 
+
+
+
+
                                 <div class="form-group">
                                     <label>Nama barang</label>
                                     <input class="form-control" type="text" value="<?= $data['nama_barang'];?>"
                                         name="nama_barang" id="" required>
                                 </div>
-
                                 <div class="form-group">
                                     <label>Tipe</label>
-                                    <select name="tipe" class="form-control" required id="">
+                                    <select name="id_tipe" class="form-control" required id="">
                                         <option value="1" <?php if ($idtipe== 1) {?>selected<?php }?>>
                                             Dokumen
                                         </option>
@@ -137,7 +139,7 @@ include 'database.php';
 
                                 <div class="form-group">
                                     <label>Layanan</label>
-                                    <select name="layanan" class="form-control" required id="">
+                                    <select name="id_layanan" class="form-control" required id="">
                                         <option value="1" <?php if ($idlayanan == 1) {?>selected<?php }?>>
                                             SS
                                         </option>

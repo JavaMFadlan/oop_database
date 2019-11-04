@@ -56,6 +56,7 @@ include 'database.php';
                     <th>Nama Barang</th>
                     <th>Layanan</th>
                     <th>Berat</th>
+                    <th>Harga</th>
                     <th>Tujuan</th>
                     <th>Aksi</th>
                 </tr>
@@ -65,14 +66,17 @@ include 'database.php';
             $no = 1;
             $query= $join->injoin();
             while ($data = mysqli_fetch_assoc($query)) {
-                // var_dump($data);
-                ?>
+                $hasil = $data['harga'] * $data['berat'];
+                $hasil1 += $hasil;
+
+?>
                 <tr>
                     <td><?php echo $no++; ?></td>
                     <td><img src="img/<?= $data['foto']; ?>" width="50px" alt=""></td>
                     <td><?php echo $data['nama_barang']; ?></td>
                     <td><?php echo $data['layanan']; ?></td>
                     <td><?php echo $data['berat']?></td>
+                    <td><?php echo "Rp.".number_format($hasil,'0',',','.'); ?></td>
                     <td><?php echo $data['kota_penerima'] ?></td>
                     <td><a href="show.php?id=<?php echo $data['id_pengiriman']; ?>&aksi=show">
                             <input type="submit" class="btn btn-outline-primary" value="Lihat"></a>
@@ -96,23 +100,23 @@ include 'database.php';
                 </h4>
                 <div class="card-body">
                     <center>
-                        <?php echo "Rp.".number_format($total,'0',',','.');?>
+                        <?php echo "Rp.".number_format($hasil1,'0',',','.');?>
 
                         <?php if (isset($_POST['bayar'])) {
                                 $total= $_POST['total'];
                                 $total1= $_POST['total1'];
-                                $hasil= $total1-$total;
+                                $total2= $total1-$total;
                             }?>
                         <form action="" method="post">
                             <div class="form-group">
                                 <label>Harga Produk</label>
-                                <input type="hidden" name="total" value="<?= $total?>">
-                                <input class="form-control" type="number" min=<?= $total?> name="total1" id="" required>
+                                <input type="hidden" name="total" value="<?= $hasil?>">
+                                <input class="form-control" type="number" min=<?= $hasil?> name="total1" id="" required>
                                 <input class="btn btn-outline-success" type="submit" value="Bayar" name="bayar">
                             </div>
                         </form>
                         <label>Kembalian</label>
-                        <?php echo "Rp.".number_format($hasil,'0',',','.');?>
+                        <?php echo "Rp.".number_format($total2,'0',',','.');?>
                         <center>
                 </div>
             </div>

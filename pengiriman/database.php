@@ -33,17 +33,17 @@ class Pengiriman extends Database
     }
     public function edit($id_pengiriman)
     {
-        $pengiriman = mysqli_query($this->koneksi,"SELECT * FROM tb_pengiriman where id='$id_pengiriman'");
+        $pengiriman = mysqli_query($this->koneksi,"SELECT * FROM tb_pengiriman where id_pengiriman='$id_pengiriman'");
         return $pengiriman;
     }
-    public function update($id_pengiriman,$id_pengirim,$id_penerima,$id_barang,$id_layanan)
+    public function update($id_pengiriman,$id_pengirim,$id_penerima,$id_barang,$id_layanan,$id_tipe)
     {
         mysqli_query($this->koneksi,"UPDATE tb_pengiriman SET 
         id_pengirim='$id_pengirim',id_penerima='$id_penerima',id_barang='$id_barang',id_layanan='$id_layanan',id_tipe='$id_tipe' WHERE id_pengiriman='$id_pengiriman'");
     }
-    public function delete($id_pengiriman)
+    public function delete($id)
     {
-        mysqli_query($this->koneksi,"DELETE tb_pengiriman WHERE id='$id_pengiriman'");
+        mysqli_query($this->koneksi,"DELETE FROM tb_pengiriman WHERE id_pengiriman='$id'");
     }
     
 }
@@ -69,7 +69,7 @@ class Pengirim extends Database
     }
     public function edit($id_pengirim)
     {
-        $pengirim = mysqli_query($this->koneksi,"SELECT * FROM tb_pengirim where id='$id_pengirim'");
+        $pengirim = mysqli_query($this->koneksi,"SELECT * FROM tb_pengirim where id_pengirim='$id_pengirim'");
         return $pengirim;
     }
     public function update($id_pengirim,$nama,$kota,$kode_pos)
@@ -77,9 +77,9 @@ class Pengirim extends Database
         mysqli_query($this->koneksi,"UPDATE tb_pengirim SET 
         nama_pengirim='$nama',kota_pengirim='$kota',kode_pos_pengirim='$kode_pos' WHERE id_pengirim='$id_pengirim'");
     }
-    public function delete($id_pengirim)
+    public function delete($id)
     {
-        mysqli_query($this->koneksi,"DELETE tb_pengirim WHERE id='$id_pengirim'");
+        mysqli_query($this->koneksi,"DELETE FROM tb_pengirim WHERE id_pengirim='$id'");
     }
 }
 class Penerima extends Database
@@ -104,7 +104,7 @@ class Penerima extends Database
     }
     public function edit($id_penerima)
     {
-        $penerima = mysqli_query($this->koneksi,"SELECT * FROM tb_penerima where id='$id_penerima'");
+        $penerima = mysqli_query($this->koneksi,"SELECT * FROM tb_penerima where id_penerima='$id_penerima'");
         return $penerima;
     }
     public function update($id_penerima,$nama,$kota,$kode_pos)
@@ -112,9 +112,9 @@ class Penerima extends Database
         mysqli_query($this->koneksi,"UPDATE tb_penerima SET 
         nama_penerima='$nama',kota_penerima='$kota',kode_pos_penerima='$kode_pos' WHERE id_penerima='$id_penerima'");
     }
-    public function delete($id_penerima)
+    public function delete($id)
     {
-        mysqli_query($this->koneksi,"DELETE tb_penerima WHERE id='$id_penerima'");
+        mysqli_query($this->koneksi,"DELETE FROM tb_penerima WHERE id_penerima='$id'");
     }
 }
 class Barang extends Database
@@ -139,17 +139,17 @@ class Barang extends Database
     }
     public function edit($id_barang)
     {
-        $pengiriman = mysqli_query($this->koneksi,"SELECT * FROM tb_barang where id='$id_barang'");
+        $pengiriman = mysqli_query($this->koneksi,"SELECT * FROM tb_barang where id_barang='$id_barang'");
         return $pengiriman;
     }
     public function update($id_barang,$id_tipe,$nama,$berat,$foto)
     {
-        mysqli_query($this->koneksi,"UPDATE tb_barang SET 
+        mysqli_query($this->koneksi,"UPDATE tb_barang SET
         id_tipe='$id_tipe',nama_barang='$nama',berat='$berat',foto='$foto' WHERE id_barang='$id_barang'");
     }
-    public function delete($id_barang)
+    public function delete($id)
     {
-        mysqli_query($this->koneksi,"DELETE tb_barang WHERE id='$id_barang'");
+        mysqli_query($this->koneksi,"DELETE FROM tb_barang WHERE id_barang='$id'");
     }
 }
 class Tipe extends Database
