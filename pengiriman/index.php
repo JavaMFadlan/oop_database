@@ -1,5 +1,9 @@
 <?php
+session_start();
 include 'database.php';
+if ($_SESSION['user']) {
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +42,7 @@ include 'database.php';
                     </button>
                 </li>
                 <li>
-                    <a class="" aria-labelledby="dropdownMenu2" href="createpengirim.php">
+                    <a class="" aria-labelledby="dropdownMenu2" href="create.php">
                         <input class="btn btn-outline-success" type="submit" name="" value="Buat"></a>
                 </li>
             </ul>
@@ -141,3 +145,6 @@ $(document).ready(function() {
 </script>
 
 </html>
+<?php }else {
+    header("location:login.php");
+}?>

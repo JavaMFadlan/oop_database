@@ -1,3 +1,15 @@
+<?php
+include "database.php";
+
+if (isset($_POST['save'])) {
+    $nama = $_POST['nama'];
+    $kota = $_POST['kota'];
+    $kode_pos = $_POST['kode_pos'];
+    $nama_penerima = $_POST['nama_penerima'];
+    $kota_penerima = $_POST['kota_penerima'];
+    $kode_pos_penerima = $_POST['kode_pos_penerima'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,23 +49,65 @@
     </nav>
 
 
-
-
-    <div class="container-fluid">
-        <div class="row row-md-8 ">
-            <div class="col-md-8 mx-auto">
-                <div class="card justify-content-center">
-                    <div class="card-body">
-                        <form action="proses.php?aksi=tambah" method="post" enctype="multipart/form-data">
+    <form action="proses.php?aksi=tambah" method="post" enctype="multipart/form-data">
+        <div class="container-fluid">
+            <div class="row row-md-8 ">
+                <div class="col-md-8 mx-auto " style="margin-top:50px;">
+                    <h1 class="card-title text-center">Data Pengirim</h1>
+                    <div class="card justify-content-center">
+                        <div class="card-body">
                             <div class="form-group">
                                 <label>Nama Pengirim</label>
                                 <input class="form-control" type="text" name="nama" id="" required>
                             </div>
                             <div class="form-group">
-                                <label>Alamat Pengirim</label>
-                                <textarea class="form-control" name="alamat" id="" required cols="10"
-                                    rows="5"></textarea>
+                                <label>kota</label>
+                                <input class="form-control" type="text" name="kota" id="" required>
                             </div>
+
+                            <div class="form-group">
+                                <label>kode pos</label>
+                                <input class="form-control" type="number" name="kode_pos" id="" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br>
+        <div class="container-fluid">
+            <div class="row row-md-8 ">
+                <div class="col-md-8 mx-auto">
+                    <h1 class="card-title text-center">Data Penerima</h1>
+                    <div class="card justify-content-center">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Nama penerima</label>
+                                <input class="form-control" type="text" name="nama_penerima" id="" required>
+                            </div>
+                            <div class="form-group">
+                                <label>kota penerima</label>
+                                <input class="form-control" type="text" name="kota_penerima" id="" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>kode pos penerima</label>
+                                <input class="form-control" type="number" name="kode_pos_penerima" id="" required>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br><br><br><br>
+        <div class="container-fluid">
+            <div class="row row-md-8 ">
+                <div class="col-md-8 mx-auto">
+                    <h1 class="card-title text-center">Data Barang</h1>
+                    <div class="card justify-content-center">
+                        <div class="card-body">
 
                             <div class="form-group">
                                 <label>Nama Barang</label>
@@ -71,42 +125,41 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Layanan</label>
-                                <select name="layanan" class="form-control" required id="">
-                                    <option value="YES">YES</option>
-                                    <option value="REG">REG</option>
-                                    <option value="OKE">OKE</option>
+                                <label>tipe</label>
+                                <select name="id_tipe" class="form-control" required id="">
+                                    <?php
+                                    $query = $tipe->type();
+                                    while ($data = mysqli_fetch_array($query)) {
+                                        ?>
+                                    <option value="<?=$data['id_tipe']?>"><?= $data['tipe']?></option>
+                                    <?php
+                                    }
+                                    ?>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label>Nomor Telepon</label>
-                                <input type="number" name="nomor" class="form-control" id="" required>
+                                <label>Layanan</label>
+                                <select name="id_layanan" class="form-control" required id="">
+                                    <?php
+                                    $query1 = $layanan->layan();
+                                    while ($data = mysqli_fetch_array($query1)) {
+                                        ?>
+                                    <option value="<?=$data['id_layanan']?>"><?= $data['layanan']?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
                             </div>
 
-                            <div class="form-group">
-                                <label>Nama Penerima</label>
-                                <input class="form-control" type="type" name="nama_penerima" id="" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Alamat Penerima</label>
-                                <textarea class="form-control" name="alamat_penerima" id="" required cols="10"
-                                    rows="5"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Kode Pos</label>
-                                <input class="form-control" type="number" name="kode" id="" required>
-                            </div>
 
                             <input type="submit" value="Simpan" class="btn btn-outline-primary" name="save">
                             <input type="reset" value="Reset" class="btn btn-outline-warning">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </form>
     <script src="/bootstrapoopdatabase/assets/js/jquery.min.js"></script>
     <script src="/bootstrapoopdatabase/assets/js/bootstrap.bundle.js"></script>

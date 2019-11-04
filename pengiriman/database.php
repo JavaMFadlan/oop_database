@@ -60,12 +60,9 @@ class Pengirim extends Database
     public function mencaripengirim()
     {
         $caripengirim = mysqli_query($this->koneksi,"SELECT max(id_pengirim) as id_pengirim from tb_pengirim LIMIT 1");
+        // query cari pengirim berguna untuk mencari data maksimum dari kolom id dan di inisialisaikan sebagai id_pengirim dari 
+        // tabel pengirim dan dibatas 1 baris
         return $caripengirim;
-    }
-    public function show($id_pengirim)
-    {
-        $pengirim =mysqli_query($this->koneksi,"SELECT * FROM tb_pengirim where id='$id_pengirim'");
-        return $pengirim;
     }
     public function edit($id_pengirim)
     {
@@ -97,11 +94,6 @@ class Penerima extends Database
         $caripenerima = mysqli_query($this->koneksi,"SELECT max(id_penerima) as id_penerima from tb_penerima LIMIT 1");
         return $caripenerima;
     }
-    public function show($id_penerima)
-    {
-        $penerima =mysqli_query($this->koneksi,"SELECT * FROM tb_penerima where id='$id_penerima'");
-        return $penerima;
-    }
     public function edit($id_penerima)
     {
         $penerima = mysqli_query($this->koneksi,"SELECT * FROM tb_penerima where id_penerima='$id_penerima'");
@@ -131,11 +123,6 @@ class Barang extends Database
     {
         $caribarang = mysqli_query($this->koneksi,"SELECT max(id_barang) as id_barang FROM tb_barang LIMIT 1");
         return $caribarang;
-    }
-    public function show($id_barang)
-    {
-        $pengiriman =mysqli_query($this->koneksi,"SELECT * FROM tb_barang where id='$id_barang'");
-        return $pengiriman;
     }
     public function edit($id_barang)
     {
@@ -194,9 +181,6 @@ class Tipe extends Database
         }
         public function wherejoin($id)
         {
-            // $injoin = mysqli_query($this->koneksi,"SELECT * FROM tb_barang
-            //                                     INNER JOIN tipe ON tb_barang.id_tipe = tipe.id_tipe
-            //                                     ");
             $injoin = mysqli_query($this->koneksi,"SELECT * FROM tb_pengiriman
                                                     INNER JOIN tb_barang ON tb_pengiriman.id_barang = tb_barang.id_barang
                                                     INNER JOIN tb_pengirim ON tb_pengiriman.id_pengirim = tb_pengirim.id_pengirim
@@ -208,7 +192,24 @@ class Tipe extends Database
         }
     }
     
-
+class Login extends Database
+{
+    public function register($user, $pass)
+    {
+        mysqli_query($this->koneksi,"INSERT INTO masuk VALUES('$user','$pass')");
+    }
+    public function masuk($user)
+    {
+        $login = mysqli_query($this->koneksi,"SELECT * FROM masuk WHERE username='$user'");
+        return $login;
+    }
+    public function periksa()
+    {
+        $login = mysqli_query($this->koneksi,"SELECT * FROM masuk");
+        return $login;
+    }
+    
+}
 
 $db = new Database();
 $pengiriman = new Pengiriman();
@@ -218,5 +219,5 @@ $barang = new Barang();
 $tipe = new Tipe();
 $join = new Join();
 $layanan = new Layanan();
-
+$login = new Login();
 ?>
