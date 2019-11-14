@@ -1,14 +1,7 @@
 <?php
-include "database.php";
-
-if (isset($_POST['save'])) {
-    $nama = $_POST['nama'];
-    $kota = $_POST['kota'];
-    $kode_pos = $_POST['kode_pos'];
-    $nama_penerima = $_POST['nama_penerima'];
-    $kota_penerima = $_POST['kota_penerima'];
-    $kode_pos_penerima = $_POST['kode_pos_penerima'];
-}
+session_start();
+include 'database.php';
+if ($_SESSION['user']) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +19,8 @@ if (isset($_POST['save'])) {
 <body>
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand text-white">Biodata</a>
+    <nav class="navbar navbar-expand-lg " style="background-color: #fc8803;">
+        <a class="navbar-brand text-black"><i class="fa fa-plus fa-lg"> Data Pengiriman</i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -35,13 +28,17 @@ if (isset($_POST['save'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" disabled><i class="fa fa-user-plus fa-lg"> Buat Produk</i></a>
+                    <a class="nav-link" disabled></a>
                 </li>
             </ul>
             <ul class="navbar-nav">
                 <li>
                     <a class="" aria-labelledby="dropdownMenu2" href="index.php">
-                        <input class="btn btn-outline-success" type="submit" value="Masuk Index"></a>
+                        <input class="btn btn-dark" type="submit" value="Index"></a>
+                </li>
+                <li>
+                    <a class="" aria-labelledby="dropdownMenu2" href="logout.php">
+                        <input class="btn btn-danger" type="submit" value="logout"></a>
                 </li>
             </ul>
         </div>
@@ -50,9 +47,9 @@ if (isset($_POST['save'])) {
 
 
     <form action="proses.php?aksi=tambah" method="post" enctype="multipart/form-data">
-        <div class="container-fluid">
-            <div class="row row-md-8 ">
-                <div class="col-md-8 mx-auto " style="margin-top:50px;">
+        <div class="container">
+            <div class="row row-md-6 ">
+                <div class="col-sm-6">
                     <h1 class="card-title text-center">Data Pengirim</h1>
                     <div class="card justify-content-center">
                         <div class="card-body">
@@ -72,12 +69,7 @@ if (isset($_POST['save'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <br><br><br><br>
-        <div class="container-fluid">
-            <div class="row row-md-8 ">
-                <div class="col-md-8 mx-auto">
+                <div class="col-sm-6">
                     <h1 class="card-title text-center">Data Penerima</h1>
                     <div class="card justify-content-center">
                         <div class="card-body">
@@ -94,14 +86,11 @@ if (isset($_POST['save'])) {
                                 <label>kode pos penerima</label>
                                 <input class="form-control" type="number" name="kode_pos_penerima" id="" required>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <br><br><br><br>
         <div class="container-fluid">
             <div class="row row-md-8 ">
                 <div class="col-md-8 mx-auto">
@@ -131,7 +120,7 @@ if (isset($_POST['save'])) {
                                     $query = $tipe->type();
                                     while ($data = mysqli_fetch_array($query)) {
                                         ?>
-                                    <option value="<?=$data['id_tipe']?>"><?= $data['tipe']?></option>
+                                    <option value="<?=$data['id_tipe']?>"> <?= $data['tipe']?> </option>
                                     <?php
                                     }
                                     ?>
@@ -167,3 +156,6 @@ if (isset($_POST['save'])) {
 </body>
 
 </html>
+<?php }else {
+    header("location:login.php");    
+}?>

@@ -11,13 +11,15 @@ if (isset($_POST['save'])) {
 if($aksi == "register"){
     $data2 = $login->periksa();
     $data1 = mysqli_fetch_assoc($data2);
-    if ($username != $data1['username']) {
+    if ($data1['username'] != $username) {
         $passw = password_hash($pass,PASSWORD_DEFAULT);
         $login->register($username, $passw);
         header("location:login.php");
     }
     else{
-        header("location:register.php");
+    $alert = "alert('Username Telah Dipakai'); 
+            window.location = 'register.php';";
+    exit("<script>$alert</script>");
     }
 }
 elseif($aksi == "login"){
@@ -29,9 +31,16 @@ elseif($aksi == "login"){
     // var_dump($pas);
     if($verify == $pass){
         $_SESSION['user'] = $username;
+        if ($_SESSION['user']== "admin") {
+            header("location:admin.php");
+        }else {            
         header("location:index.php");
+        }
     }else {
-        header("location:login.php");
+    $alert = "alert('Salah Username Atau Password'); 
+                window.location = 'login.php';";
+    exit("<script>$alert</script>");
+    
     }
 }
 }

@@ -1,8 +1,11 @@
 <?php
+session_start();
 include 'database.php';
 
 $aksi = $_GET['aksi'];
 $id = $_GET['id'];
+if ($_SESSION['user']) {
+
 
 if (isset($_POST['save'])) {
 	// id
@@ -14,7 +17,8 @@ if (isset($_POST['save'])) {
 	
 	
 	
-	// pegirim
+	
+	// pengirim
 	$nama = $_POST['nama'];
 	$kota = $_POST['kota'];
 	$kode_pos = $_POST['kode_pos'];
@@ -48,7 +52,9 @@ $tempat='img/';
 // berguna untuk mengambil nama foto, ukuran, error, dan temporary nama
 if ( $error === 4 ) {
 	// error 4 berarti data tak ada
-return false;
+$alert = "alert('File Kosong'); 
+            history.go(-1);";
+    exit("<script>$alert</script>");
 }
 
 $valid = ['jpg','jpeg','png'];
@@ -57,12 +63,16 @@ $ekstensi = strtolower(end($ekstensi));
 
 if (!in_array($ekstensi, $valid)) {
 	// jika ektensi file bukan jpg,png atau jpeg maka akan di return false atau gambar tak masuk
-return false;
+$alert = "alert('Ekstensi File Salah'); 
+            history.go(-1);";
+    exit("<script>$alert</script>");
 }
 
 if ( $ukuranF > 2000000) {
 // jika ukuran terlalu besar maka akan di return false atau gambar tak masuk
-return false;
+$alert = "alert('Ukuran Terlalu Besar'); 
+            history.go(-1);";
+    exit("<script>$alert</script>");
 }
 
 $namaFB = uniqid();
@@ -91,13 +101,9 @@ $id_penerima = $row2['id_penerima'];
 $row3 = mysqli_fetch_array($sql3);
 $id_barang = $row3['id_barang'];
 // mysqli_fetch_array mengambil data query dengan bentuk assosiatif dan numeric
-$pengiriman->create($id_pengirim,$id_penerima,$id_barang,$id_layanan,$id_tipe);
+$pengiriman->create($id_pengirim,$id_penerima,$id_barang,$id_layanan,$id_tipe,$_SESSION['user']);
 header("location:index.php");
 }
-
-
-
-
 
 
 elseif($aksi == "update"){
@@ -132,9 +138,17 @@ $fotol = mysqli_fetch_assoc($data);
 $path = "img/".$fotol['foto'];
 unlink($path);
 $pengirim->delete($kirim['id_pengirim']);
+$admin->delete($kirim['id_pengiriman']);
 $penerima->delete($kirim['id_penerima']);
 $barang->delete($kirim['id_barang']);
 $pengiriman->delete($kirim['id_pengiriman']);
 header("location:index.php");
+}
+
+elseif ($aksi=="ganti") {
+	$admin->update($id);
+	$admin->delete($id);
+	header("location:admin.php");
+}
 }
 ?>

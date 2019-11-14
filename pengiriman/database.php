@@ -22,9 +22,9 @@ class Pengiriman extends Database
         $pengiriman = mysqli_query($this->koneksi,"SELECT * FROM tb_pengiriman");
         return $pengiriman;
     }
-    public function create($id_pengirim,$id_penerima,$id_barang,$id_layanan,$id_tipe)
+    public function create($id_pengirim,$id_penerima,$id_barang,$id_layanan,$id_tipe,$user)
     {
-        mysqli_query($this->koneksi,"insert into tb_pengiriman values('','$id_pengirim','$id_penerima','$id_barang','$id_layanan','$id_tipe')");
+        mysqli_query($this->koneksi,"insert into tb_pengiriman values('','$id_pengirim','$id_penerima','$id_barang','$id_layanan','$id_tipe','$user','Belum Terkirim')");
     }
     public function show($id_pengiriman)
     {
@@ -167,27 +167,37 @@ class Tipe extends Database
     }
     class Join extends Database
     {
-        public function injoin()
-        {
-            
-            $injoin = mysqli_query($this->koneksi,"SELECT * FROM tb_pengiriman
-                                                INNER JOIN tb_barang ON tb_pengiriman.id_barang = tb_barang.id_barang
-                                                INNER JOIN tb_pengirim ON tb_pengiriman.id_pengirim = tb_pengirim.id_pengirim
-                                                INNER JOIN tb_penerima ON tb_pengiriman.id_penerima = tb_penerima.id_penerima
-                                                INNER JOIN tb_layanan ON tb_pengiriman.id_layanan = tb_layanan.id_layanan
-                                                INNER JOIN tipe ON tb_pengiriman.id_tipe = tipe.id_tipe
-                                                ");                  
-        return $injoin;
-        }
         public function wherejoin($id)
         {
             $injoin = mysqli_query($this->koneksi,"SELECT * FROM tb_pengiriman
                                                     INNER JOIN tb_barang ON tb_pengiriman.id_barang = tb_barang.id_barang
                                                     INNER JOIN tb_pengirim ON tb_pengiriman.id_pengirim = tb_pengirim.id_pengirim
                                                     INNER JOIN tb_penerima ON tb_pengiriman.id_penerima = tb_penerima.id_penerima
-                                                    INNER JOIN tb_layanan ON tb_pengiriman.id_layanan = tb_layanan.id_layanan
+                                                    INNER JOIN tb_layanan ON tb_pengiriman.id_layanan = tb_layanan.id_layanan                                                    
                                                     INNER JOIN tipe ON tb_pengiriman.id_tipe = tipe.id_tipe
                                                     WHERE tb_pengiriman.id_pengiriman = '$id'");
+        return $injoin;
+        }
+        public function userjoin($username)
+        {
+            $injoin = mysqli_query($this->koneksi,"SELECT * FROM tb_pengiriman
+                                                    INNER JOIN tb_barang ON tb_pengiriman.id_barang = tb_barang.id_barang
+                                                    INNER JOIN tb_pengirim ON tb_pengiriman.id_pengirim = tb_pengirim.id_pengirim
+                                                    INNER JOIN tb_penerima ON tb_pengiriman.id_penerima = tb_penerima.id_penerima
+                                                    INNER JOIN tb_layanan ON tb_pengiriman.id_layanan = tb_layanan.id_layanan                                                    
+                                                    INNER JOIN tipe ON tb_pengiriman.id_tipe = tipe.id_tipe
+                                                    INNER JOIN masuk ON tb_pengiriman.username = masuk.username
+                                                    WHERE tb_pengiriman.username = '$username'");
+        return $injoin;
+        }
+        public function adminjoin()
+        {
+            $injoin = mysqli_query($this->koneksi,"SELECT * FROM tb_admin
+                                                    INNER JOIN tb_barang ON tb_admin.id_barang = tb_barang.id_barang
+                                                    INNER JOIN tb_pengiriman ON tb_admin.id_pengiriman = tb_pengiriman.id_pengiriman
+                                                    INNER JOIN tb_pengirim ON tb_admin.id_pengirim = tb_pengirim.id_pengirim
+                                                    INNER JOIN tb_penerima ON tb_admin.id_penerima = tb_penerima.id_penerima
+                                                    ");
         return $injoin;
         }
     }
@@ -210,8 +220,30 @@ class Login extends Database
     }
     
 }
+class Admin extends Database
+{
+    public function periksa($id_pengiriman)
+    {
+        $pengiriman = mysqli_query($this->koneksi,"SELECT * FROM tb_admin WHERE id_pengiriman='$id_pengiriman'");
+        return $pengiriman;
+    }
+    public function create($id_pengiriman,$id_barang,$id_pengirim,$id_penerima)
+    {
+        mysqli_query($this->koneksi,"INSERT INTO tb_admin VALUES('$id_pengiriman','$id_barang','$id_pengirim','$id_penerima')");
+    }
+    public function update($id_pengiriman)
+    {
+        mysqli_query($this->koneksi,"UPDATE tb_pengiriman SET status='Terkirim' WHERE id_pengiriman='$id_pengiriman'");
+    }
+    public function delete($id)
+    {
+        mysqli_query($this->koneksi,"DELETE FROM tb_admin WHERE id_pengiriman='$id'");
+    }
+}
+
 
 $db = new Database();
+$admin = new Admin();
 $pengiriman = new Pengiriman();
 $pengirim = new Pengirim();
 $penerima = new Penerima();

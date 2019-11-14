@@ -1,5 +1,7 @@
 <?php
+session_start();
 include 'database.php';
+if ($_SESSION['user']) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,26 +24,21 @@ include 'database.php';
     ?>
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand text-white">
-            <?= $nama?></a>
+    <nav class="navbar navbar-expand-lg " style="background-color: #fc8803;">
+        <a class="navbar-brand text-black">
+            <i class="fa fa-eye fa-lg"> Lihat
+                Data</i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" disabled><i class="fa fa-id-card-o fa-lg"> Lihat
-                            Data</i></a>
-                </li>
             </ul>
             <ul class="navbar-nav">
                 <li>
                     <a class="" aria-labelledby="dropdownMenu2" href="index.php">
-                        <input class="btn btn-outline-success" type="submit" value="Masuk Index"></a>
+                        <input class="btn btn-dark" type="submit" value="Index"></a>
                 </li>
             </ul>
         </div>
@@ -54,71 +51,70 @@ include 'database.php';
         <div class="row row-md-12 ">
             <div class="col-md-12 mx-auto mt-5">
                 <div class="card justify-content-center">
-                    <div class="card-body"></div>
-                    <div class="row featurette">
-                        <div class="col-md-7 order-md-2">
-                            <a class="btn btn-primary" data-toggle="collapse" href="#datapengirim" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                Pengirim
-                            </a>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#datapenerima" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                Penerima
-                            </a>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#databarang" role="button"
-                                aria-expanded="false" aria-controls="collapseExample">
-                                Barang
-                            </a>
-                            <div class="collapse" id="datapengirim">
-                                <div class="card card-body">
-                                    <span class="btn btn-danger col-4">Nama :
-                                        <?=$data['nama_pengirim']?>
-                                    </span>
-                                    <span class="btn btn-danger col-4">Kota :
-                                        <?=$data['kota_pengirim']?>
-                                    </span>
-                                    <span class="btn btn-danger col-4">Kode Pos :
-                                        <?=$data['kode_pos_pengirim']?>
-                                    </span>
+                    <div class="card-body">
+                        <div class="row featurette">
+                            <div class="col-md-7 order-md-2">
+                                <a class="btn btn-primary" data-toggle="collapse" href="#datapengirim" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Pengirim
+                                </a>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#datapenerima" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Penerima
+                                </a>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#databarang" role="button"
+                                    aria-expanded="false" aria-controls="collapseExample">
+                                    Barang
+                                </a>
+                                <div class="collapse" id="datapengirim">
+                                    <div class="card card-body">
+                                        <span class="btn btn-danger col-4">Nama :
+                                            <?=$data['nama_pengirim']?>
+                                        </span>
+                                        <span class="btn btn-danger col-4">Kota :
+                                            <?=$data['kota_pengirim']?>
+                                        </span>
+                                        <span class="btn btn-danger col-4">Kode Pos :
+                                            <?=$data['kode_pos_pengirim']?>
+                                        </span>
 
+                                    </div>
+                                </div>
+                                <div class="collapse" id="datapenerima">
+                                    <div class="card card-body">
+                                        <span class="btn btn-primary col-4">Nama :
+                                            <?=$data['nama_pengirim']?>
+                                        </span>
+                                        <span class="btn btn-primary col-4">Kota :
+                                            <?=$data['kota_pengirim']?>
+                                        </span>
+                                        <span class="btn btn-primary col-4">Kode Pos :
+                                            <?=$data['kode_pos_pengirim']?>
+                                        </span>
+
+                                    </div>
+                                </div>
+
+                                <div class="collapse" id="databarang">
+                                    <div class="card card-body">
+                                        <span class="btn btn-success col-4">Nama Barang :
+                                        </span>
+                                        <span class="btn btn-success col-4">berat Barang :
+                                            <?=$data['berat']?>
+                                        </span>
+                                        <span class="btn btn-success col-4">Layanan Barang :
+                                            <?=$data['layanan']?>
+                                        </span>
+                                        <span class="btn btn-success col-4">Tipe Barang :
+                                            <?=$data['tipe']?>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="collapse" id="datapenerima">
-                                <div class="card card-body">
-                                    <span class="btn btn-primary col-4">Nama :
-                                        <?=$data['nama_pengirim']?>
-                                    </span>
-                                    <span class="btn btn-primary col-4">Kota :
-                                        <?=$data['kota_pengirim']?>
-                                    </span>
-                                    <span class="btn btn-primary col-4">Kode Pos :
-                                        <?=$data['kode_pos_pengirim']?>
-                                    </span>
-
-                                </div>
+                            <div class=" col-md-5 order-md-1">
+                                <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+                                    src="img/<?= $data['foto']?>" style="width:400px;" alt="">
                             </div>
-
-                            <div class="collapse" id="databarang">
-                                <div class="card card-body">
-                                    <span class="btn btn-success col-4">Nama Barang :
-                                        <?=$data['nama_barang']?>
-                                    </span>
-                                    <span class="btn btn-success col-4">berat Barang :
-                                        <?=$data['berat']?>
-                                    </span>
-                                    <span class="btn btn-success col-4">Layanan Barang :
-                                        <?=$data['layanan']?>
-                                    </span>
-                                    <span class="btn btn-success col-4">Tipe Barang :
-                                        <?=$data['tipe']?>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" col-md-5 order-md-1">
-                            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-                                src="img/<?= $data['foto']?>" alt="">
-
                         </div>
                     </div>
 
@@ -137,3 +133,7 @@ include 'database.php';
 </body>
 
 </html>
+<?php }else {
+    header("location:login.php");
+}
+?>
